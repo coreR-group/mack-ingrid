@@ -1,5 +1,32 @@
 ---
 title: "Collaborator Analysis"
 format: html
+author: Ingrid Slette
 ---
+
+## Exercise: Explore, Clean, and Wrangle Data
+
+### Set up
+```{r}
+#| warning: false
+#| message: false
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+### Read data
+```{r}
+#| warning: false
+#| message: false
+lobster_traps <- read_csv("../data/Lobster_Trap_Counts_All_Years_20210519.csv")
+```
+
+### Explore data
+```{r}
+colnames(lobster_traps)
+glimpse(lobster_traps)
+
+```
 
