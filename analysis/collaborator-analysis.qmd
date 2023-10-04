@@ -75,7 +75,15 @@ ggplot(data = lobsters_traps_summarize, aes(x = YEAR, y = TOTAL_TRAPS)) +
 # line and point plot
 ggplot(data = lobsters_traps_summarize, aes(x = YEAR, y = TOTAL_TRAPS)) +
     geom_point(aes(color = SITE)) +
-    geom_line(aes(color = SITE))
+    geom_line(aes(color = SITE)) +
+    labs(x = "Year", 
+       y = "Total Trap Count",
+       color = "Site",
+       title = "Lobster Trap Counts Over Time",
+       subtitle = "Total number of traps by site each year") +
+  theme_bw() +
+  scale_y_continuous(breaks = seq(0, 2100, 250)) +
+  scale_color_viridis_d()
 ```
 ```{r}
 #| message: false
@@ -100,11 +108,12 @@ ggplot(data = lobster_traps_fishing_pressure, aes(x = SITE, y = COUNT, fill = FI
        y = "Count",
        fill = "Fishing Pressure",
        title = "Lobster Trap Counts",
-       subtitle = "Sum of traps counts by site and year") +
+       subtitle = "Total number of traps counts by site") +
   coord_flip() +
   theme_bw() +
   theme(legend.position = "bottom",
         axis.ticks.y = element_blank()) +
   scale_y_continuous(breaks = seq(0, 650, 100))
+
 ```
 
