@@ -1,5 +1,23 @@
 ---
 title: "Owner Analysis"
 format: html
+author: "Mack White"
 ---
+
+## **Exercise**: Explore, Clean, and Wrangle Data
+
+### Setup
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+```
+
+### Read in data and check out
+```{r}
+lobster_abundance <- read_csv("../data/Lobster_Abundance_All_Years_20220829.csv")
+```
+
+
 
