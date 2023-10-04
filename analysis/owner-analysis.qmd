@@ -4,9 +4,9 @@ format: html
 author: "Mack White"
 ---
 
-## **Exercise**: Explore, Clean, and Wrangle Data
+# **Exercise**: Explore, Clean, and Wrangle Data
 
-### Setup
+## Setup
 ```{r}
 library(readr)
 library(dplyr)
@@ -14,10 +14,35 @@ library(ggplot2)
 library(tidyr)
 ```
 
-### Read in data and check out
+## Read in data and check out
 ```{r}
 lobster_abundance <- read_csv("../data/Lobster_Abundance_All_Years_20220829.csv")
+#glimpse(lobster_abundance)
 ```
 
+## Convert missing values using `mutate()` and `na_if()`
+```{r}
+lobster_abundance <- lobster_abundance %>% 
+  mutate(SIZE_MM = na_if(SIZE_MM, -99999))
+# unique(lobster_abundance$SIZE_MM)
+# View(lobster_abundance)
+```
 
+## `filter()` practice
+```{r}
+#unique(lobster_abundance$SITE) - five sites, including NAPL
+not_napl <- lobster_abundance %>% 
+  filter(SITE != "NAPL")
+#unique(not_napl$SITE) - removed "NAPL" from dataset
+```
+
+```{r}
+aque_70mm <- not_napl %>% 
+  filter(SITE == "AQUE", SIZE_MM > 70)
+# glimpse(aque_70mm)
+# unique(aque_70mm$SITE)
+# range(aque_70mm$SIZE_MM) - looks like we have filtered for site "AQUE" and >70 mm carapace length succesfully
+```
+
+## Create visually appealing and informative data visualization
 
