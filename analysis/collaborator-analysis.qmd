@@ -27,6 +27,29 @@ lobster_traps <- read_csv("../data/Lobster_Trap_Counts_All_Years_20210519.csv")
 ```{r}
 colnames(lobster_traps)
 glimpse(lobster_traps)
-
+head(lobster_traps)
+unique(lobster_traps$YEAR)
+unique(lobster_traps$SITE)
+unique(lobster_traps$TRAPS)
 ```
+
+### Clean data
+```{r}
+lobster_traps <- lobster_traps %>% 
+    mutate(TRAPS = na_if(TRAPS, -99999))
+unique(lobster_traps$TRAPS)
+```
+
+### Create subset without NAPL site
+```{r}
+not_napl <- lobster_traps %>% 
+    filter(SITE != "NAPL")
+```
+
+### Create subset with data from CARP or number of floats > 20
+```{r}
+carp_20_traps <- lobster_traps %>% 
+    filter(SITE == "CARP" | TRAPS > 20)
+```
+
 
