@@ -52,4 +52,59 @@ carp_20_traps <- lobster_traps %>%
     filter(SITE == "CARP" | TRAPS > 20)
 ```
 
+## Exercise: Data Visualization
+```{r}
+ggplot(data = lobster_traps, aes(x = TRAPS)) +
+    geom_histogram() +
+    facet_wrap( ~ YEAR)
+```
+
+```{r}
+#| message: false
+#| warning: false
+lobsters_traps_summarize <- lobster_traps %>% 
+  group_by(SITE, YEAR) %>% 
+  summarize(TOTAL_TRAPS = sum(TRAPS, na.rm = TRUE))
+```
+
+```{r}
+# line plot
+ggplot(data = lobsters_traps_summarize, aes(x = YEAR, y = TOTAL_TRAPS)) +
+    geom_line(aes(color = SITE))
+
+# line and point plot
+ggplot(data = lobsters_traps_summarize, aes(x = YEAR, y = TOTAL_TRAPS)) +
+    geom_point(aes(color = SITE)) +
+    geom_line(aes(color = SITE))
+```
+```{r}
+#| message: false
+#| warning: false
+lobster_traps_fishing_pressure <- lobster_traps %>% 
+    filter(YEAR %in% c(2019, 2020, 2021)) %>%
+    mutate(FISHING_PRESSURE = if_else(TRAPS >= 8, true = "high", false = "low")) %>%
+    group_by(SITE, FISHING_PRESSURE) %>%
+    summarize(COUNT = n()) %>%
+    drop_na()
+```
+
+```{r}
+# bar plot
+ggplot(data = lobster_traps_fishing_pressure, aes(x = SITE, y = COUNT, fill = FISHING_PRESSURE)) +
+    geom_col()
+
+# dodged bar plot
+ggplot(data = lobster_traps_fishing_pressure, aes(x = SITE, y = COUNT, fill = FISHING_PRESSURE)) +
+    geom_col(position = "dodge") +
+  labs(x = "Year", 
+       y = "Count",
+       fill = "Fishing Pressure",
+       title = "Lobster Trap Counts",
+       subtitle = "Sum of traps counts by site and year") +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        axis.ticks.y = element_blank()) +
+  scale_y_continuous(breaks = seq(0, 650, 100))
+```
 
